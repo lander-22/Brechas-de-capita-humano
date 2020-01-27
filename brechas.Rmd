@@ -1,0 +1,240 @@
+---
+title: "brechas de capital humano"
+output: 
+ html_document:
+    code_folding: "hide"
+    fig_width: 8
+    fig_height: 4
+---
+
+```{r setup, include=FALSE,warning=FALSE,message=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(echo = TRUE)
+## packages
+library(readxl)
+library(highcharter)
+library(tidyverse)
+
+
+
+## data 
+
+
+dat1 <- read_excel("data/inversion.xlsx")
+
+dat2 <- read_excel("data/inversion.xlsx",sheet = "niveles")
+
+
+
+```
+
+## Inversión Minera
+
+Inversión de las principales ciudades mineras del pais en miles de dólares.
+
+
+
+```{r warning=FALSE,message=FALSE}
+
+
+
+log_inversiones <- dat1 %>% 
+  filter(Departamento %in% c("ANCASH", "APURIMAC", "AREQUIPA", "CAJAMARCA","HUANCAVELICA","JUNIN","MOQUEGUA","PASCO")) %>% 
+  mutate(Año=as.integer(Año)) %>% 
+  print()
+
+X <- hchart(log_inversiones, "line", hcaes(x = Año, y =round(log_inversion,2), group = Departamento)) %>% 
+     hc_yAxis(title = list(text = "Log Inversión ($)")) %>% 
+     hc_add_theme(hc_theme_538()) %>% 
+     hc_plotOptions(
+       series  = list(
+        marker = list(enabled = FALSE)
+       )
+      )
+
+
+
+
+
+```
+
+
+## Inversión Minera por nivel Educativo
+
+
+
+#### **Inicial**
+
+```{r warning=FALSE,message=FALSE}
+
+
+
+nivel1 <- dat2 %>% 
+  filter(Nivel=="INICIAL",departamento %in% c("ANCASH", "APURIMAC", "AREQUIPA", "CAJAMARCA","HUANCAVELICA","JUNIN","MOQUEGUA","PASCO")) %>% 
+  mutate(año=as.integer(año)) %>% 
+  print()
+
+Y1 <- hchart(nivel1, "line", hcaes(x = año, y =round(Valor,2), group = departamento)) %>% 
+      hc_yAxis(title = list(text = "Inicial (%)")) %>% 
+      hc_add_theme(hc_theme_538()) %>% 
+      hc_plotOptions(
+        series  = list(
+          marker = list(enabled = FALSE)
+          )
+        )
+
+map(1:2,function(x){
+        if(x==1) return(X)
+        else  return(Y1)
+  
+}) %>% 
+  hw_grid(rowheight = 250,ncol = 1) %>% htmltools::browsable()
+
+
+
+```
+
+#### **Primaria**
+
+```{r warning=FALSE,message=FALSE}
+
+
+
+nivel2 <- dat2 %>% 
+  filter(Nivel=="PRIMARIA",departamento %in% c("ANCASH", "APURIMAC", "AREQUIPA", "CAJAMARCA","HUANCAVELICA","JUNIN","MOQUEGUA","PASCO")) %>% 
+  mutate(año=as.integer(año)) %>% 
+  print()
+
+Y2 <- hchart(nivel2, "line", hcaes(x = año, y =round(Valor,2), group = departamento)) %>% 
+      hc_yAxis(title = list(text = "Primaria (%)")) %>% 
+      hc_add_theme(hc_theme_538()) %>% 
+      hc_plotOptions(
+        series  = list(
+          marker = list(enabled = FALSE)
+          )
+        )
+
+map(1:2,function(x){
+        if(x==1) return(X)
+        else  return(Y2)
+  
+}) %>% 
+  hw_grid(rowheight = 250,ncol = 1) %>% htmltools::browsable()
+
+
+
+```
+
+
+#### **Secundario**
+
+```{r warning=FALSE,message=FALSE}
+
+
+
+nivel3 <- dat2 %>% 
+  filter(Nivel=="SECUNDARIO",departamento %in% c("ANCASH", "APURIMAC", "AREQUIPA", "CAJAMARCA","HUANCAVELICA","JUNIN","MOQUEGUA","PASCO")) %>% 
+  mutate(año=as.integer(año)) %>% 
+  print()
+
+Y3 <- hchart(nivel3, "line", hcaes(x = año, y =round(Valor,2), group = departamento)) %>% 
+      hc_yAxis(title = list(text = "Secundario (%)")) %>% 
+      hc_add_theme(hc_theme_538()) %>% 
+      hc_plotOptions(
+        series  = list(
+          marker = list(enabled = FALSE)
+          )
+        )
+
+
+map(1:2,function(x){
+        if(x==1) return(X)
+        else  return(Y3)
+  
+}) %>% 
+  hw_grid(rowheight = 250,ncol = 1) %>% htmltools::browsable()
+
+```
+
+
+#### **Técnico**
+
+```{r warning=FALSE,message=FALSE}
+
+
+
+nivel4 <- dat2 %>% 
+  filter(Nivel=="TECNICO",departamento %in% c("ANCASH", "APURIMAC", "AREQUIPA", "CAJAMARCA","HUANCAVELICA","JUNIN","MOQUEGUA","PASCO")) %>% 
+  mutate(año=as.integer(año)) %>% 
+  print()
+
+Y4 <- hchart(nivel4, "line", hcaes(x = año, y =round(Valor,2), group = departamento)) %>% 
+      hc_yAxis(title = list(text = "Técnico (%)")) %>% 
+      hc_add_theme(hc_theme_538()) %>% 
+      hc_plotOptions(
+        series  = list(
+          marker = list(enabled = FALSE)
+          )
+        )
+
+map(1:2,function(x){
+        if(x==1) return(X)
+        else  return(Y4)
+  
+}) %>% 
+  hw_grid(rowheight = 250,ncol = 1) %>% htmltools::browsable()
+
+```
+
+
+#### **Universitario**
+
+```{r warning=FALSE,message=FALSE}
+
+
+
+nivel5 <- dat2 %>% 
+  filter(Nivel=="UNIVERSITARIO",departamento %in% c("ANCASH", "APURIMAC", "AREQUIPA", "CAJAMARCA","HUANCAVELICA","JUNIN","MOQUEGUA","PASCO")) %>% 
+  mutate(año=as.integer(año)) %>% 
+  print()
+
+Y5 <- hchart(nivel5, "line", hcaes(x = año, y =round(Valor,2), group = departamento)) %>% 
+      hc_yAxis(title = list(text = "Universitario (%)")) %>% 
+      hc_add_theme(hc_theme_538()) %>% 
+      hc_plotOptions(
+        series  = list(
+          marker = list(enabled = FALSE)
+          )
+        )
+
+map(1:2,function(x){
+        if(x==1) return(X)
+        else  return(Y5)
+  
+}) %>% 
+  hw_grid(rowheight = 250,ncol = 1) %>% htmltools::browsable()
+
+```
+
+
+
+
+```{r include=FALSE,eval=FALSE}
+
+map(1:6,function(x){
+        if(x==1) return(X)
+        else  if(x==2) return(Y1) else if(x==3) return(Y2) else if(x==4) return(Y3) else if(x==5) return(Y4) else return(Y5)
+  
+  
+}) %>% 
+  hw_grid(rowheight = 280,ncol = 1) %>% htmltools::browsable()
+
+
+
+
+
+
+```
+
+
+
